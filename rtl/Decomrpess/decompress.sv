@@ -27,10 +27,23 @@ module decompress(
   output logic [11:0] byte_out
 );
   
-  logic [21:0] temp;
+  logic [21:0] tmp;
   
   always_comb begin
-    byte_out = (byte_in * 3329) / (1<<d);
+    case(d)
+      1: begin
+        tmp = byte_in * 22'd3329 + 22'd1;
+        byte_out = tmp[12:1]; 
+      end
+      4: begin
+        tmp = byte_in * 22'd3329 + 22'd8;
+        byte_out = tmp[15:4]; 
+      end 
+      10: begin
+        tmp = byte_in * 22'd3329 + 22'd512;
+        byte_out = tmp[21:10]; 
+      end 
+    endcase
   end
   
 endmodule

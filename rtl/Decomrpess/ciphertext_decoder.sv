@@ -79,7 +79,7 @@ module ciphertext_decoder(
       shift_count <= 0;
     end
     else if(shift_in && shift_out) begin
-      {shift_data_out, shift_reg} <= {12'b0, shift_reg} << d_reg;
+      shift_reg <= shift_reg | ({52'b0, data_in} << (64-shift_count)) ;
       shift_count <= shift_count + 32;
       shift_reg <= shift_reg << d_reg;
       shift_count <= shift_count - d_reg;
